@@ -1,9 +1,10 @@
-import React from 'react'
-// import * as BooksAPI from './BooksAPI'
-import { books } from './components/books'
-import './App.css'
-import Bookcase from './components/Bookcase'
-import SearchBar from './components/SearchBar'
+import React from 'react';
+// import * as BooksAPI from './BooksAPI';
+import { books } from './components/books';
+import './App.css';
+import Bookcase from './components/Bookcase';
+import SearchBar from './components/SearchBar';
+import { Link, Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   state = {
@@ -14,21 +15,31 @@ class BooksApp extends React.Component {
       { bookShelfID: 3, bookShelfTitle: "Read" }
     ],
     books,
-    showSearchPage: false,
     reading: [],
     read: [],
     toRead: [],
   }
 
-  // Handler the toggling of the search screen
-  showSearchPageHandler = () => this.setState(prevState => ({ showSearchPage: !prevState.showSearchPage }))
-
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ?
-          <SearchBar onCloseSearch={this.showSearchPageHandler} /> :
-          <Bookcase books={this.state.books} bookshelves={this.state.bookshelves} onAddBookHandler={this.showSearchPageHandler} />}
+        <Route
+          path="/search"
+          render={() => <SearchBar
+            onCloseSearch={this.showSearchPageHandler} />}
+        />
+        <Route
+          exact
+          path="/"
+          render={() => <Bookcase
+            books={this.state.books}
+            bookshelves={this.state.bookshelves}
+            onAddBookHandler={this.showSearchPageHandler} />}
+        />
+
+        <div className="open-search">
+          <Link to="/search">Add a book </Link>
+        </div>
       </div>
     )
   }

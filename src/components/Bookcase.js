@@ -12,9 +12,6 @@ const Bookcase = props => <div className="list-books">
 			))
 		}
 	</div>
-	<div className="open-search">
-		<a onClick={props.onAddBookHandler}>Add a book</a>
-	</div>
 </div>
 
 export default Bookcase
