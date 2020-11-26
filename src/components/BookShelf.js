@@ -1,7 +1,7 @@
 import React from 'react';
 import ListOfBooksPerShelf from './ListOfBooksPerShelf';
 
-export default props => {
+const Bookshelf = props => {
 	return (
 		<div>
 			<div className="bookshelf">
@@ -9,10 +9,12 @@ export default props => {
 				<div className="bookshelf-books">
 
 					{/* Render the list of books per shelf */}
-					<ListOfBooksPerShelf bookSelf={props.bookSelf} />
+					<ListOfBooksPerShelf books={props.books} bookSelf={props.bookSelf} />
 
 				</div>
 			</div>
 		</div>
 	)
 }
+
+export default Bookshelf

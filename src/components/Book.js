@@ -5,10 +5,8 @@ export default class Book extends React.Component {
 		status: "None"
 	}
 
-	bookShelfChanger = e => {
-		this.setState(prevState => ({ status: e.target.value }))
-		console.log(e.target.value)
-	}
+	// Handles the reading status of the book
+	bookShelfChanger = e => this.setState({ status: e.target.value })
 
 	render() {
 		const { book } = this.props

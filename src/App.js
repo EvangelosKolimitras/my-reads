@@ -1,5 +1,6 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
+import { books } from './components/books'
 import './App.css'
 import Bookcase from './components/Bookcase'
 import SearchBar from './components/SearchBar'
@@ -12,6 +13,7 @@ class BooksApp extends React.Component {
       { bookShelfID: 2, bookShelfTitle: "Want to Read" },
       { bookShelfID: 3, bookShelfTitle: "Read" }
     ],
+    books,
     showSearchPage: false,
     reading: [],
     read: [],
@@ -26,7 +28,7 @@ class BooksApp extends React.Component {
       <div className="app">
         {this.state.showSearchPage ?
           <SearchBar onCloseSearch={this.showSearchPageHandler} /> :
-          <Bookcase bookshelves={this.state.bookshelves} onAddBookHandler={this.showSearchPageHandler} />}
+          <Bookcase books={this.state.books} bookshelves={this.state.bookshelves} onAddBookHandler={this.showSearchPageHandler} />}
       </div>
     )
   }
