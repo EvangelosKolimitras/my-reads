@@ -5,7 +5,7 @@ export default props => <div className="list-books">
 		<h1>MyReads</h1>
 	</div>
 	<div className="list-books-content">
-		<BookShelf bookshelfTitles={props.bookshelfTitles} />
+		<BookShelf />
 	</div>
 	<div className="open-search">
 		<a onClick={props.onAddBookHandler}>Add a book</a>

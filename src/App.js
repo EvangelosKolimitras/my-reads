@@ -6,10 +6,6 @@ import SearchBar from './components/SearchBar'
 
 class BooksApp extends React.Component {
   state = {
-    // Holds the three different shelfs for our store.
-    bookshelfTitles: [
-      "Currently Reading", "Want to Read", "Read"
-    ],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -27,7 +23,7 @@ class BooksApp extends React.Component {
       <div className="app">
         {this.state.showSearchPage ?
           <SearchBar onCloseSearch={this.showSearchPageHandler} /> :
-          <ListOfBooks bookshelfTitles={this.state.bookshelfTitles} onAddBookHandler={this.showSearchPageHandler} />}
+          <ListOfBooks onAddBookHandler={this.showSearchPageHandler} />}
       </div>
     )
   }
