@@ -6,7 +6,11 @@ export default props => <div className="list-books">
 		<h1>MyReads</h1>
 	</div>
 	<div className="list-books-content">
-		<BookShelf />
+		{
+			props.bookshelves.map(bookSelf => (
+				<BookShelf key={bookSelf.bookShelfID} bookSelf={bookSelf} />
+			))
+		}
 	</div>
 	<div className="open-search">
 		<a onClick={props.onAddBookHandler}>Add a book</a>

@@ -1,18 +1,21 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
-import ListOfBooks from './components/ListOfBooks'
+import Bookcase from './components/Bookcase'
 import SearchBar from './components/SearchBar'
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false
+    // Holds the three different shelves for our store.
+    bookshelves: [
+      { bookShelfID: 1, bookShelfTitle: "Currently Reading" },
+      { bookShelfID: 2, bookShelfTitle: "Want to Read" },
+      { bookShelfID: 3, bookShelfTitle: "Read" }
+    ],
+    showSearchPage: false,
+    reading: [],
+    read: [],
+    toRead: [],
   }
 
   // Handler the toggling of the search screen
@@ -23,7 +26,7 @@ class BooksApp extends React.Component {
       <div className="app">
         {this.state.showSearchPage ?
           <SearchBar onCloseSearch={this.showSearchPageHandler} /> :
-          <ListOfBooks onAddBookHandler={this.showSearchPageHandler} />}
+          <Bookcase bookshelves={this.state.bookshelves} onAddBookHandler={this.showSearchPageHandler} />}
       </div>
     )
   }
