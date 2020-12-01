@@ -1,23 +1,35 @@
 import React from 'react';
-// import * as BooksAPI from './BooksAPI';
 import { books } from './components/books';
 import './App.css';
 import Bookcase from './components/Bookcase';
 import SearchBar from './components/SearchBar';
 import { Link, Route } from "react-router-dom";
 
+// title, shelf, imageLinks, id, authors
+import { getAll } from './BooksAPI'
+
 class BooksApp extends React.Component {
   state = {
-    // Holds the three different shelves for our store.
-    bookshelves: [
-      { bookShelfID: 1, bookShelfTitle: "Currently Reading" },
-      { bookShelfID: 2, bookShelfTitle: "Want to Read" },
-      { bookShelfID: 3, bookShelfTitle: "Read" }
-    ],
-    books,
+    books: [],
     reading: [],
     read: [],
     toRead: [],
+  }
+
+  async componentDidMount() {
+    const res = await getAll()
+    const data = await res
+    for await (const book of data) {
+      const b = {
+        id: book.id,
+        title: book.title,
+        authors: book.authors,
+        cover: book.imageLinks,
+        shelf: book.shelf,
+      }
+      console.log(b.shelf);
+      this.setState(prevState => ({ books: prevState.books.concat([b]) }))
+    }
   }
 
   render() {
@@ -25,16 +37,20 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route
           path="/search"
-          render={() => <SearchBar
-            onCloseSearch={this.showSearchPageHandler} />}
+          render={() => <SearchBar />}
         />
+
         <Route
           exact
           path="/"
           render={() => <Bookcase
+            categories={[
+              { id: Math.random(), category: "Reading", shelf: "currentlyReading" },
+              { id: Math.random(), category: "To read", shelf: "wantToRead" },
+              { id: Math.random(), category: "Read", shelf: "read" }
+            ]}
             books={this.state.books}
-            bookshelves={this.state.bookshelves}
-            onAddBookHandler={this.showSearchPageHandler} />}
+          />}
         />
 
         <div className="open-search">
