@@ -1,38 +1,50 @@
 import React from 'react';
-import { books } from './components/books';
 import './App.css';
 import Bookcase from './components/Bookcase';
 import SearchBar from './components/SearchBar';
 import { Link, Route } from "react-router-dom";
-
-// title, shelf, imageLinks, id, authors
 import { getAll } from './BooksAPI'
 
 class BooksApp extends React.Component {
   state = {
     books: [],
     reading: [],
-    read: [],
-    toRead: [],
+    wantToRead: [],
+    read: []
   }
 
   async componentDidMount() {
+
     const res = await getAll()
     const data = await res
+    let state = []
     for await (const book of data) {
-      const b = {
+      const bookObj = {
         id: book.id,
         title: book.title,
         authors: book.authors,
-        cover: book.imageLinks,
+        cover: book.imageLinks.thumbnail,
         shelf: book.shelf,
       }
-      console.log(b.shelf);
-      this.setState(prevState => ({ books: prevState.books.concat([b]) }))
+      state.push(bookObj)
     }
+
+    this.setState(prevState => ({
+      books: [...prevState.books, ...state],
+      reading: [...prevState.reading, ...state.filter(book => book.shelf === "currentlyReading")],
+      wantToRead: [...prevState.wantToRead, ...state.filter(book => book.shelf === "wantToRead")],
+      read: [...prevState.read, ...state.filter(book => book.shelf === "read")],
+    }))
   }
 
   render() {
+
+    const categories = [
+      { id: 1, category: "Reading", shelf: "currentlyReading", books: this.state.reading },
+      { id: 2, category: "To read", shelf: "wantToRead", books: this.state.wantToRead },
+      { id: 3, category: "Read", shelf: "read", books: this.state.read }
+    ]
+
     return (
       <div className="app">
         <Route
@@ -44,11 +56,7 @@ class BooksApp extends React.Component {
           exact
           path="/"
           render={() => <Bookcase
-            categories={[
-              { id: Math.random(), category: "Reading", shelf: "currentlyReading" },
-              { id: Math.random(), category: "To read", shelf: "wantToRead" },
-              { id: Math.random(), category: "Read", shelf: "read" }
-            ]}
+            categories={categories}
             books={this.state.books}
           />}
         />
