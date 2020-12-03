@@ -10,6 +10,7 @@ export default class SearchBar extends React.Component {
 		books: []
 	}
 
+
 	fetchMovies = async () => {
 		const response = API.getAll()
 		const books = await response;
@@ -42,28 +43,27 @@ export default class SearchBar extends React.Component {
 				</div>
 				<div className="search-books-results">
 					<ol className="books-grid">
-						{
-							this.state.books.map(book => <li key={book.id}>
-								<div className="book">
-									<div className="book-top">
-										<div className="book-cover"
-											style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-										<div className="book-shelf-changer">
-											{/* Dropdown menu for changing shelf */}
-											<select  >
-												<option disabled>Move to...</option>
-												<option value="currentlyReading">Reading</option>
-												<option value="wantToRead">Want to Read</option>
-												<option value="read">Read</option>
-												<option value="none">None</option>
-											</select>
-										</div>
+						{this.state.value.trim() !== '' ? this.state.books.map(book => <li key={book.id}>
+							<div className="book">
+								<div className="book-top">
+									<div className="book-cover"
+										style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+									<div className="book-shelf-changer">
+										{/* Dropdown menu for changing shelf */}
+										<select  >
+											<option disabled>Move to...</option>
+											<option value="currentlyReading">Reading</option>
+											<option value="wantToRead">Want to Read</option>
+											<option value="read">Read</option>
+											<option value="none">None</option>
+										</select>
 									</div>
-
-									<div className="book-title">{book.title}</div>
-									<div className="book-authors">{`${book.authors}`}</div>
 								</div>
-							</li>)
+
+								<div className="book-title">{book.title}</div>
+								<div className="book-authors">{`${book.authors}`}</div>
+							</div>
+						</li>) : null
 						}
 					</ol>
 				</div>
