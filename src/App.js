@@ -1,64 +1,50 @@
 import React from 'react';
 import './App.css';
+import { books } from './components/books'
 import Bookcase from './components/Bookcase';
 import SearchBar from './components/SearchBar';
 import { Link, Route } from "react-router-dom";
-import { getAll } from './BooksAPI'
-
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    reading: [],
-    wantToRead: [],
-    read: []
+    books,
+    currentlyReading: books.filter(book => book.shelf === "currentlyReading"),
+    wantToRead: books.filter(book => book.shelf === "wantToRead"),
+    read: books.filter(book => book.shelf === "read"),
+    selectValue: ""
   }
 
-  async componentDidMount() {
 
-    const res = await getAll()
-    const data = await res
-    let state = []
-    for await (const book of data) {
-      const bookObj = {
-        id: book.id,
-        title: book.title,
-        authors: book.authors,
-        cover: book.imageLinks.thumbnail,
-        shelf: book.shelf,
-      }
-      state.push(bookObj)
-    }
-
+  changeShelfHandler = (e, book) => {
+    const value = e.target.value
     this.setState(prevState => ({
-      books: [...prevState.books, ...state],
-      reading: [...prevState.reading, ...state.filter(book => book.shelf === "currentlyReading")],
-      wantToRead: [...prevState.wantToRead, ...state.filter(book => book.shelf === "wantToRead")],
-      read: [...prevState.read, ...state.filter(book => book.shelf === "read")],
+      [value]: this.state[value] ? this.state[value].filter(value => value.id !== book.id) : prevState[value]
     }))
   }
 
   render() {
+    const { books, read, currentlyReading, wantToRead } = this.state
 
     const categories = [
-      { id: 1, category: "Reading", shelf: "currentlyReading", books: this.state.reading },
-      { id: 2, category: "To read", shelf: "wantToRead", books: this.state.wantToRead },
-      { id: 3, category: "Read", shelf: "read", books: this.state.read }
+      { id: 1, category: "Reading", shelf: "currentlyReading", books: currentlyReading },
+      { id: 2, category: "To read", shelf: "wantToRead", books: wantToRead },
+      { id: 3, category: "Read", shelf: "read", books: read }
     ]
 
     return (
       <div className="app">
-        <Route
-          path="/search"
-          render={() => <SearchBar />}
-        />
+        <Route path="/search" render={() => <SearchBar />} />
 
         <Route
           exact
           path="/"
-          render={() => <Bookcase
-            categories={categories}
-            books={this.state.books}
-          />}
+          render={() =>
+            <Bookcase
+              categories={categories}
+              books={books}
+              changeShelfHandler={this.changeShelfHandler}
+              selectValue={this.selectValue}
+            />
+          }
         />
 
         <div className="open-search">

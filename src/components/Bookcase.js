@@ -11,13 +11,12 @@ const Header = ({ children }) => (
 	</div>
 )
 
-const Bookcase = props => {
-	const state = { status: "" }
+const Bookcase = ({ categories, books, changeShelfHandler, selectValue }) => {
 	return (
 		<Header>
 			{
 				/* Render the list of books per shelf */
-				props.categories.map(shelf => {
+				categories.map(shelf => {
 					return (
 						<div key={shelf.id}>
 							<div className="bookshelf">
@@ -27,7 +26,7 @@ const Bookcase = props => {
 									{/* Render the list of books per shelf */}
 									<ol className="books-grid">
 										{
-											props.books
+											books
 												.filter(book => book.shelf === shelf.shelf)
 												.map(book => {
 													return (
@@ -35,18 +34,16 @@ const Bookcase = props => {
 															<li key={book.id}>
 																<div className="book">
 																	<div className="book-top">
-
 																		<div className="book-cover"
-																			style={{ width: 128, height: 193, backgroundImage: `url(${book.cover})` }}></div>
+																			style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
 																		<div className="book-shelf-changer">
-
 																			{/* Dropdown menu for changing shelf */}
-																			<select onChange={e => { }} value={state.status} >
+																			<select onChange={e => { changeShelfHandler(e, book) }} value={selectValue} >
 																				<option disabled>Move to...</option>
 																				<option value="currentlyReading">Reading</option>
 																				<option value="wantToRead">Want to Read</option>
 																				<option value="read">Read</option>
-																				<option>None</option>
+																				<option value="none">None</option>
 																			</select>
 																		</div>
 																	</div>
