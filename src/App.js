@@ -4,36 +4,58 @@ import { books } from './components/books'
 import SearchBar from './components/SearchBar';
 import Bookcase from './components/Bookcase'
 import { Link, Route } from "react-router-dom";
+
 class BooksApp extends React.Component {
 
   state = {
     bookcase: {
-      currentlyReading: books.filter(book => book.shelf === "currentlyReading"),
-      wantToRead: books.filter(book => book.shelf === "wantToRead"),
-      read: books.filter(book => book.shelf === "read"),
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
     },
     selectValue: ""
   }
 
+  componentDidMount() {
+    // State initialisation
+    this.setState(prevState => {
+      return {
+        bookcase: {
+          currentlyReading: books.filter(book => book.shelf === "currentlyReading"),
+          wantToRead: books.filter(book => book.shelf === "wantToRead"),
+          read: books.filter(book => book.shelf === "read"),
+        }
+      }
+    })
+  }
+
   changeShelfHandler = (e, book) => {
-    // const value = e.target.value
-    // this.setState(prevState => ({
-    //   [value]: this.state.bookcase[value] ? this.state.bookcase[value].filter(value => value.id !== book.id) : prevState.Bookcase[value]
-    // }))
-    console.log(e.target);
-    console.log(book);
+    const value = e.target.value
+    const books = [...this.state.bookcase[book.shelf]];
+    console.log(books);
+
+    this.setState(prevState => {
+      if (value === "none") return
+
+      return {
+        bookcase: {
+          ...prevState.bookcase,
+          [value]: [...prevState.bookcase[value], book]
+        },
+        selectValue: ""
+      }
+    })
   }
 
   render() {
     const {
-      books,
       bookcase: { currentlyReading, wantToRead, read }
     } = this.state
 
     const categories = [
-      { id: 1, category: "Reading", shelf: "currentlyReading", books: currentlyReading },
-      { id: 2, category: "To read", shelf: "wantToRead", books: wantToRead },
-      { id: 3, category: "Read", shelf: "read", books: read }
+      { id: Math.random() * 19, category: "Reading", shelf: "currentlyReading", books: currentlyReading },
+      { id: Math.random() * 19, category: "To read", shelf: "wantToRead", books: wantToRead },
+      { id: Math.random() * 19, category: "Read", shelf: "read", books: read }
     ]
 
     return (
@@ -47,7 +69,7 @@ class BooksApp extends React.Component {
             <Bookcase
               categories={categories}
               changeShelfHandler={this.changeShelfHandler}
-              selectValue={this.selectValue}
+              selectValue={this.state.selectValue}
             />
           }
         />
