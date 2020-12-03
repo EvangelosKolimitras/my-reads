@@ -25,9 +25,9 @@ const Bookcase = ({ categories, books, changeShelfHandler, selectValue }) => {
 
 									{/* Render the list of books per shelf */}
 									<ol className="books-grid">
+
 										{
-											books
-												.filter(book => book.shelf === shelf.shelf)
+											shelf.books
 												.map(book => {
 													return (
 														<>

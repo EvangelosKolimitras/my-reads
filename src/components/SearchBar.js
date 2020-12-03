@@ -10,13 +10,11 @@ export default class SearchBar extends React.Component {
 		books: []
 	}
 
-
 	fetchMovies = async () => {
 		const response = API.getAll()
 		const books = await response;
 		return books.filter((book) => book.title.toLowerCase().trim().includes(this.state.value));
 	}
-
 
 	onSearchHandler = (e) => {
 		this.setState(prevState => ({ value: e.target.value }))
@@ -25,7 +23,6 @@ export default class SearchBar extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.books);
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">

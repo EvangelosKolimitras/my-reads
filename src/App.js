@@ -1,28 +1,34 @@
 import React from 'react';
 import './App.css';
 import { books } from './components/books'
-import Bookcase from './components/Bookcase';
 import SearchBar from './components/SearchBar';
+import Bookcase from './components/Bookcase'
 import { Link, Route } from "react-router-dom";
 class BooksApp extends React.Component {
+
   state = {
-    books,
-    currentlyReading: books.filter(book => book.shelf === "currentlyReading"),
-    wantToRead: books.filter(book => book.shelf === "wantToRead"),
-    read: books.filter(book => book.shelf === "read"),
+    bookcase: {
+      currentlyReading: books.filter(book => book.shelf === "currentlyReading"),
+      wantToRead: books.filter(book => book.shelf === "wantToRead"),
+      read: books.filter(book => book.shelf === "read"),
+    },
     selectValue: ""
   }
 
-
   changeShelfHandler = (e, book) => {
-    const value = e.target.value
-    this.setState(prevState => ({
-      [value]: this.state[value] ? this.state[value].filter(value => value.id !== book.id) : prevState[value]
-    }))
+    // const value = e.target.value
+    // this.setState(prevState => ({
+    //   [value]: this.state.bookcase[value] ? this.state.bookcase[value].filter(value => value.id !== book.id) : prevState.Bookcase[value]
+    // }))
+    console.log(e.target);
+    console.log(book);
   }
 
   render() {
-    const { books, read, currentlyReading, wantToRead } = this.state
+    const {
+      books,
+      bookcase: { currentlyReading, wantToRead, read }
+    } = this.state
 
     const categories = [
       { id: 1, category: "Reading", shelf: "currentlyReading", books: currentlyReading },
@@ -40,7 +46,6 @@ class BooksApp extends React.Component {
           render={() =>
             <Bookcase
               categories={categories}
-              books={books}
               changeShelfHandler={this.changeShelfHandler}
               selectValue={this.selectValue}
             />
