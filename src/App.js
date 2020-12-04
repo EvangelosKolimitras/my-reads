@@ -4,7 +4,6 @@ import { books } from './components/books'
 import SearchBar from './components/SearchBar';
 import Bookcase from './components/Bookcase'
 import { Link, Route } from "react-router-dom";
-
 class BooksApp extends React.Component {
 
   state = {
@@ -31,8 +30,12 @@ class BooksApp extends React.Component {
 
   changeShelfHandler = (e, book) => {
     const value = e.target.value
-    const books = [...this.state.bookcase[book.shelf]];
+
+    const books = [...this.state.bookcase[book.shelf]]
     console.log(books);
+    const filteredBooks = books.filter(b => b.id !== book.id)
+    console.log(filteredBooks);
+
 
     this.setState(prevState => {
       if (value === "none") return
@@ -40,6 +43,7 @@ class BooksApp extends React.Component {
       return {
         bookcase: {
           ...prevState.bookcase,
+          [book.shelf]: filteredBooks,
           [value]: [...prevState.bookcase[value], book]
         },
         selectValue: ""

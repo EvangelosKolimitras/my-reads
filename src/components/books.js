@@ -1,4 +1,3 @@
-import { MULTIPLIER } from '../App'
 export const books = [
 	{
 		id: Math.random() * 100,
