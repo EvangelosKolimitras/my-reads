@@ -14,11 +14,14 @@ export default class SearchBar extends React.Component {
 		const response = API.getAll()
 		const books = await response;
 		return books.filter((book) => book.title.toLowerCase().trim().includes(this.state.value));
+
+	}
+	componentDidMount() {
+		this.fetchMovies()
 	}
 
 	onSearchHandler = (e) => {
 		this.setState(prevState => ({ value: e.target.value }))
-
 		this.fetchMovies().then(books => this.setState({ books }))
 	}
 

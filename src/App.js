@@ -4,10 +4,10 @@ import { books } from "./components/books";
 import SearchBar from "./components/SearchBar";
 import Bookcase from "./components/Bookcase";
 import { Link, Route } from "react-router-dom";
+
 class BooksApp extends React.Component {
   state = {
     bookcase: {
-      // Edo ine ta state gia ta 3 rafia
       books,
       currentlyReading: [],
       wantToRead: [],
@@ -16,29 +16,20 @@ class BooksApp extends React.Component {
     selectValue: ""
   };
 
+
+
+
   componentDidMount() {
     // State initialisation
-    this.setState((prevState) => {
-      return {
-        books,
-        bookcase: {
-          currentlyReading: books.filter(
-            (book) => book.shelf === "currentlyReading"
-          ),
-          wantToRead: books.filter((book) => book.shelf === "wantToRead"),
-          read: books.filter((book) => book.shelf === "read")
-        }
-      };
-    });
+
+    this.setState((prevState) => JSON.parse(localStorage.getItem("local-state")));
   }
+
 
   changeShelfHandler = (e, book) => {
     const value = e.target.value;
-
     const books = [...this.state.bookcase[book.shelf]];
-    console.log(books);
     const filteredBooks = books.filter((b) => b.id !== book.id);
-    console.log("shelf to change", value);
 
     this.setState((prevState) => {
       if (value === "none") return;
@@ -48,7 +39,6 @@ class BooksApp extends React.Component {
           b.id === book.id ? { ...b, shelf: value } : b
         ),
         bookcase: {
-          // ine sosti i logiki edo?
           ...prevState.bookcase,
           [book.shelf]: filteredBooks,
           [value]: [...prevState.bookcase[value], { ...book, shelf: value }]
@@ -56,7 +46,13 @@ class BooksApp extends React.Component {
         selectValue: ""
       };
     });
+
   };
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem("local-state", JSON.stringify(nextState))
+  }
+
 
   render() {
     const {
