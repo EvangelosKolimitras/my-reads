@@ -9,18 +9,16 @@ const Shelf = (props) => {
 				<div className="bookshelf-books">
 					{/* Render the list of books per shelf */}
 					<ol className="books-grid">
-						{props.shelf?.books.map((book) => {
+						{props.shelf.books.map((book) => {
 							return (
-								<>
-									<li key={book.id}>
-										<Book
-											book={book}
-											changeShelfHandler={props.changeShelfHandler}
-											shelf={props.shelf.shelf}
-											selectValue={book.shelf}
-										/>
-									</li>
-								</>
+								<li key={book.id}>
+									<Book
+										book={book}
+										changeShelfHandler={props.changeShelfHandler}
+										shelf={props.shelf.shelf}
+										selectValue={book.shelf}
+									/>
+								</li>
 							);
 						})}
 					</ol>

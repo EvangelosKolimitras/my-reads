@@ -16,14 +16,17 @@ const Bookcase = ({ categories, changeShelfHandler, selectValue }) => {
 		<Header>
 			{
 				/* Render the list of books per shelf */
-				categories.map(shelf =>
-					<Shelf
-						key={shelf.id}
-						changeShelfHandler={changeShelfHandler}
-						shelf={shelf}
-						selectValue={selectValue}
-					/>
-				)
+				categories.map(shelf => {
+					console.log(shelf);
+					return (
+						<Shelf
+							key={shelf.id}
+							changeShelfHandler={changeShelfHandler}
+							shelf={shelf}
+							selectValue={selectValue}
+						/>
+					)
+				})
 			}
 		</Header>
 	)

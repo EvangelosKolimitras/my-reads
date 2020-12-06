@@ -16,14 +16,28 @@ class BooksApp extends React.Component {
     selectValue: ""
   };
 
-
-
-
   componentDidMount() {
     // State initialisation
-
-    this.setState((prevState) => JSON.parse(localStorage.getItem("local-state")));
+    this.setState(
+      (prevState) =>
+        // Check if localStorage exists
+        localStorage.getItem("local-state") ?
+          JSON.parse(localStorage.getItem("local-state")) :
+          // if !localStorage then use the currentState
+          ({
+            books,
+            bookcase: {
+              currentlyReading: books.filter(
+                (book) => book.shelf === "currentlyReading"
+              ),
+              wantToRead: books.filter((book) => book.shelf === "wantToRead"),
+              read: books.filter((book) => book.shelf === "read")
+            }
+          })
+    )
   }
+
+  updateLocaleStorage = () => localStorage.setItem("local-state", JSON.stringify(this.state))
 
 
   changeShelfHandler = (e, book) => {
@@ -45,16 +59,14 @@ class BooksApp extends React.Component {
         },
         selectValue: ""
       };
-    });
+    }, () => this.updateLocaleStorage());
 
   };
 
-  componentWillUpdate(nextProps, nextState) {
-    localStorage.setItem("local-state", JSON.stringify(nextState))
-  }
-
 
   render() {
+
+    // Destructure the state
     const {
       bookcase: { currentlyReading, wantToRead, read }
     } = this.state;

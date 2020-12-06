@@ -44,7 +44,7 @@ export default class SearchBar extends React.Component {
 						{this.state.value.trim() !== '' ?
 							this.state.books.map(
 								book =>
-									<li key={book.id}>
+									<li key={book.id} >
 										<Book
 											book={book}
 											changeShelfHandler={e => this.props.changeShelfHandler(e, book)}
@@ -54,7 +54,7 @@ export default class SearchBar extends React.Component {
 						}
 					</ol>
 				</div>
-			</div>
+			</div >
 		)
 	}
 }
