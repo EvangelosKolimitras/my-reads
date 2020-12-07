@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
-import { books } from "./components/books";
 import SearchBar from "./components/SearchBar";
 import Bookcase from "./components/Bookcase";
+import * as API from './BooksAPI'
 import { Link, Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   state = {
-    books,
+    books: [],
     bookcase: {
       currentlyReading: [],
       wantToRead: [],
@@ -16,8 +16,10 @@ class BooksApp extends React.Component {
     selectValue: ""
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    console.log(API);
     // State initialisation
+    const books = await API.getAll();
     this.setState(
       (prevState) =>
         // Check if localStorage exists
