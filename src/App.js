@@ -99,17 +99,17 @@ class BooksApp extends React.Component {
           exact
           path="/"
           render={() => (
-            <Bookcase
-              categories={categories}
-              changeShelfHandler={this.changeShelfHandler}
-              selectValue={this.state.selectValue}
-            />
+            <>
+              <Bookcase
+                categories={categories}
+                changeShelfHandler={this.changeShelfHandler}
+                selectValue={this.state.selectValue}
+              />
+              <div className="open-search">
+                <Link to="/search">Add a book </Link>
+              </div></>
           )}
         />
-
-        <div className="open-search">
-          <Link to="/search">Add a book </Link>
-        </div>
       </div>
     );
   }
