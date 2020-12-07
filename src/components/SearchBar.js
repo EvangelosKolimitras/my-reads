@@ -10,19 +10,31 @@ export default class SearchBar extends React.Component {
 		books: []
 	}
 
-	fetchMovies = async () => {
-		const response = API.getAll()
-		const books = await response;
-		return books.filter((book) => book.title.toLowerCase().trim().includes(this.state.value));
+	checkIfArray = (arr) => Array.isArray(arr) ? [...arr] : Array.from(arr)
 
-	}
-	componentDidMount() {
-		this.fetchMovies()
+	// Originaly the server sends the response without the property "shelf"
+	addProperty = (target, property) => {
+		let updatedTarget = []
+		for (let prop of target) {
+			if (property in prop) return
+			let updatedObject = Object.assign({}, prop, { [property]: "" })
+			updatedTarget = [...updatedTarget, updatedObject]
+		}
+		return updatedTarget
 	}
 
 	onSearchHandler = (e) => {
-		this.setState(prevState => ({ value: e.target.value }))
-		this.fetchMovies().then(books => this.setState({ books }))
+		const value = e.target.value;
+		this.setState({ value })
+		!value.length < 1 ? API.search(value).then(b => {
+
+			// Checks if the response is an array
+			let bks = this.checkIfArray(b).filter((book) => book.imageLinks !== undefined)
+
+			// Add the shelf property to a book
+			let books = this.addProperty(bks, "shelf")
+			this.setState({ books })
+		}) : this.setState({ value: "" })
 	}
 
 	render() {
@@ -43,13 +55,16 @@ export default class SearchBar extends React.Component {
 					<ol className="books-grid">
 						{this.state.value.trim() !== '' ?
 							this.state.books.map(
-								book =>
-									<li key={book.id} >
-										<Book
-											book={book}
-											changeShelfHandler={e => this.props.changeShelfHandler(e, book)}
-										/>
-									</li>
+								book => {
+									return (
+										<li key={book.id} >
+											<Book
+												book={book}
+												changeShelfHandler={e => this.props.changeShelfHandler(e, book)}
+											/>
+										</li>
+									)
+								}
 							) : null
 						}
 					</ol>

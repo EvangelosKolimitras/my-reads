@@ -7,8 +7,8 @@ import { Link, Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   state = {
+    books,
     bookcase: {
-      books,
       currentlyReading: [],
       wantToRead: [],
       read: []
@@ -42,6 +42,9 @@ class BooksApp extends React.Component {
 
   changeShelfHandler = (e, book) => {
     const value = e.target.value;
+    // if the book's shelf property is not one of the categories, then
+    // we set it to what the user chooses it to be
+    if (book["shelf"] !== value) { book["shelf"] = value }
     const books = [...this.state.bookcase[book.shelf]];
     const filteredBooks = books.filter((b) => b.id !== book.id);
 
@@ -65,7 +68,6 @@ class BooksApp extends React.Component {
 
 
   render() {
-
     // Destructure the state
     const {
       bookcase: { currentlyReading, wantToRead, read }
@@ -114,3 +116,4 @@ class BooksApp extends React.Component {
 }
 
 export default BooksApp;
+

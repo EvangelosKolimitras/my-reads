@@ -17,7 +17,6 @@ const Bookcase = ({ categories, changeShelfHandler, selectValue }) => {
 			{
 				/* Render the list of books per shelf */
 				categories.map(shelf => {
-					console.log(shelf);
 					return (
 						<Shelf
 							key={shelf.id}
