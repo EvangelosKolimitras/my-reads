@@ -1,7 +1,8 @@
 import React from 'react'
-
+import SelectOptions from './SelectOptions'
 
 export const Book = props => {
+	const { shelf, changeShelfHandler, book, selectValue } = props;
 	return (
 		<div className="book">
 			<div className="book-top">
@@ -9,17 +10,16 @@ export const Book = props => {
 					style={{ width: 128, height: 193, backgroundImage: `url(${props.book.imageLinks.thumbnail})` }}></div>
 				<div className="book-shelf-changer">
 					{/* Dropdown menu for changing shelf */}
-					<select onChange={e => { props.changeShelfHandler(e, props.book) }} value={props.selectValue} >
-						<option disabled>Move to...</option>
-						<option disabled={props.shelf === "currentlyReading" ? true : false} value="currentlyReading">Reading</option>
-						<option disabled={props.shelf === "wantToRead"} value="wantToRead">Want to Read</option>
-						<option disabled={props.shelf === "read"} value="read">Read</option>
-						<option value="none">None</option>
-					</select>
+					<SelectOptions
+						shelf={shelf}
+						changeShelfHandler={changeShelfHandler}
+						book={book}
+						selectValue={selectValue}
+					/>
 				</div>
 			</div>
-			<div className="book-title">{props.book.title}</div>
-			<div className="book-authors">{`${props.book.authors}`}</div>
+			<div className="book-title">{book.title}</div>
+			<div className="book-authors">{`${book.authors}`}</div>
 		</div>
 	)
 }
