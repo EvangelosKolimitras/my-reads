@@ -17,7 +17,6 @@ class BooksApp extends React.Component {
   };
 
   componentDidMount = async () => {
-    console.log(API);
     // State initialisation
     const books = await API.getAll();
     this.setState(

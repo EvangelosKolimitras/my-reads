@@ -55,17 +55,13 @@ export default class SearchBar extends React.Component {
 					<ol className="books-grid">
 						{this.state.value.trim() !== '' ?
 							this.state.books.map(
-								book => {
-									return (
-										<li key={book.id} >
-											<Book
-												book={book}
-												selectValue={book.shelf}
-												changeShelfHandler={e => this.props.changeShelfHandler(e, book)}
-											/>
-										</li>
-									)
-								}
+								book =>
+									<Book
+										key={book.id}
+										book={book}
+										selectValue={book.shelf}
+										changeShelfHandler={e => this.props.changeShelfHandler(e, book)}
+									/>
 							) : null
 						}
 					</ol>
