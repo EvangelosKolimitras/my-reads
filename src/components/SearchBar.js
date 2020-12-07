@@ -17,7 +17,7 @@ export default class SearchBar extends React.Component {
 		let updatedTarget = []
 		for (let prop of target) {
 			if (property in prop) return
-			let updatedObject = Object.assign({}, prop, { [property]: "" })
+			let updatedObject = Object.assign({}, prop, { [property]: "wantToRead" || "read" || "currentlyReading" })
 			updatedTarget = [...updatedTarget, updatedObject]
 		}
 		return updatedTarget
@@ -60,6 +60,7 @@ export default class SearchBar extends React.Component {
 										<li key={book.id} >
 											<Book
 												book={book}
+												selectValue={book.shelf}
 												changeShelfHandler={e => this.props.changeShelfHandler(e, book)}
 											/>
 										</li>

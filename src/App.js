@@ -39,12 +39,12 @@ class BooksApp extends React.Component {
 
   updateLocaleStorage = () => localStorage.setItem("local-state", JSON.stringify(this.state))
 
-
   changeShelfHandler = (e, book) => {
     const value = e.target.value;
+
     // if the book's shelf property is not one of the categories, then
     // we set it to what the user chooses it to be
-    if (book["shelf"] !== value) { book["shelf"] = value }
+
     const books = [...this.state.bookcase[book.shelf]];
     const filteredBooks = books.filter((b) => b.id !== book.id);
 
@@ -63,7 +63,6 @@ class BooksApp extends React.Component {
         selectValue: ""
       };
     }, () => this.updateLocaleStorage());
-
   };
 
 
