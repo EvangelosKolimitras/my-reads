@@ -4,6 +4,7 @@ import SearchBar from "./components/SearchBar";
 import Bookcase from "./components/Bookcase";
 import * as API from './BooksAPI'
 import { Link, Route } from "react-router-dom";
+import { map, filter, log, ifElse } from "./utils/fns";
 
 class BooksApp extends React.Component {
   state = {
@@ -16,50 +17,108 @@ class BooksApp extends React.Component {
     selectValue: ""
   };
 
+
+  // State initialisation
   componentDidMount = async () => {
-    // State initialisation
-    const books = await API.getAll();
+
+    let books;
+
+    // Fetch all books from the API
+    books = await API.getAll();
+    log(`Currently ${books.length} books.`);
+
+    let currentlyReading = filter(books);
+    let wantToRead = filter(books);
+    let read = filter(books);
+
+
+    /*
+      Filter the this.state.books array which is being populated onComponentDidMount
+      with data fetched from the API.
+
+      This will create a new shelf and store the books with the property {shelf:"currentlyReading"}
+    */
+    currentlyReading(b => b.shelf === "currentlyReading")
+
+
+    /*
+      Filter the this.state.books array which is being populated onComponentDidMount
+      with data fetched from the API.
+
+      This will create a new shelf and store the books with the property {shelf:"wantToRead"}
+    */
+    wantToRead(b => b.shelf === "wantToRead")
+
+    /*
+      Filter the this.state.books array which is being populated onComponentDidMount
+      with data fetched from the API.
+
+      This will create a new shelf and store the books with the property {shelf:"read"}
+    */
+    read(b => b.shelf === "read")
+
     this.setState(
-      (prevState) =>
+      (prevState) => {
         // Check if localStorage exists
-        localStorage.getItem("local-state") ?
-          JSON.parse(localStorage.getItem("local-state")) :
-          // if !localStorage then use the currentState
-          ({
-            books,
-            bookcase: {
-              currentlyReading: books.filter(
-                (book) => book.shelf === "currentlyReading"
-              ),
-              wantToRead: books.filter((book) => book.shelf === "wantToRead"),
-              read: books.filter((book) => book.shelf === "read")
-            }
-          })
-    )
+        return ifElse(localStorage.getItem("local-state"))
+          (
+            () => JSON.parse(localStorage.getItem("local-state")),
+            () => ({ books, bookcase: { currentlyReading, wantToRead, read } })
+          )
+      })
   }
 
   updateLocaleStorage = () => localStorage.setItem("local-state", JSON.stringify(this.state))
 
   changeShelfHandler = (e, book) => {
-    const value = e.target.value;
 
-    // if the book's shelf property is not one of the categories, then
-    // we set it to what the user chooses it to be
+    let shelfOfClickedBook, shelfOfTheCurrentBook;
 
-    const books = [...this.state.bookcase[book.shelf]];
-    const filteredBooks = books.filter((b) => b.id !== book.id);
+    /* 
+      If the book's shelf property is not one of the categories, then
+      we set it to what the user chooses it to be
+    */
+    shelfOfClickedBook = e.target.value;
 
+
+
+    /*
+       This book variable if a copy of the state, which the state is being populated onComponentDidMount
+        with data coming from the server.  --> API.getALL() see componentDidMount()
+    */
+    // const books = [...this.state.books]
+
+
+
+    /* 
+      This is the shelf which holds all the books that have the same shelf as the current book
+      eg. If the current book's shelf property is "wantToRead" then we are on the shelf "wantToRead"
+    */
+    shelfOfTheCurrentBook = [...this.state.bookcase[book.shelf]];
+
+
+    // Hanldes the case where the option is "none"
     this.setState((prevState) => {
-      if (value === "none") return;
+      if (shelfOfClickedBook === "none") {
+        return {
+          books: filter(prevState.books)(b => b.id !== book.id),
+          bookcase: {
+            ...prevState.bookcase,
+            [book.shelf]: filter(shelfOfTheCurrentBook)((b) => b.id !== book.id),
+          },
+          selectValue: ""
+        };
+      };
 
       return {
-        books: prevState.books.map((b) =>
-          b.id === book.id ? { ...b, shelf: value } : b
-        ),
+
+        books: map(prevState.books)((b) =>
+          b.id === book.id ? { ...b, shelf: shelfOfClickedBook } : b)
+        ,
         bookcase: {
           ...prevState.bookcase,
-          [book.shelf]: filteredBooks,
-          [value]: [...prevState.bookcase[value], { ...book, shelf: value }]
+          [book.shelf]: filter(shelfOfTheCurrentBook)((b) => b.id !== book.id),
+          [shelfOfClickedBook]: [...prevState.bookcase[shelfOfClickedBook], { ...book, shelf: shelfOfClickedBook }]
         },
         selectValue: ""
       };
@@ -76,7 +135,7 @@ class BooksApp extends React.Component {
     const categories = [
       {
         id: Math.random() * 19,
-        category: "Reading",
+        category: "currentlyReading",
         shelf: "currentlyReading",
         books: currentlyReading
       },
@@ -91,9 +150,11 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <Route path="/search" render={() => <SearchBar
-          changeShelfHandler={this.changeShelfHandler}
-        />} />
+        <Route path="/search" render={() =>
+          <SearchBar
+            books={this.state.books}
+            changeShelfHandler={this.changeShelfHandler}
+          />} />
 
         <Route
           exact

@@ -2,18 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import * as API from '../BooksAPI'
 import { Book } from './Book'
-
+import { filter, isArray } from '../utils/fns'
 export default class SearchBar extends React.Component {
 
 	state = {
 		value: "",
-		books: []
+		books: this.props.books
 	}
 
-	checkIfArray = (arr) => Array.isArray(arr) ? [...arr] : Array.from(arr)
-
-	// Originaly the server sends the response without the property "shelf"
-	addProperty = (target, property) => {
+	/* 
+		Originaly the server sends the response without the property "shelf".
+		The addProperty method acts as a proxy which takes the incoming object and
+		adds the propert "shelf" on it.	
+	*/
+	addProp = (target, property) => {
 		let updatedTarget = []
 		for (let prop of target) {
 			if (property in prop) return
@@ -23,18 +25,46 @@ export default class SearchBar extends React.Component {
 		return updatedTarget
 	}
 
+
+	// This method handles the selection event
 	onSearchHandler = (e) => {
+
+
+		// Set the value state to the user's input
 		const value = e.target.value;
 		this.setState({ value })
-		!value.length < 1 ? API.search(value).then(b => {
 
-			// Checks if the response is an array
-			let bks = this.checkIfArray(b).filter((book) => book.imageLinks !== undefined)
 
-			// Add the shelf property to a book
-			let books = this.addProperty(bks, "shelf")
-			this.setState({ books })
-		}) : this.setState({ value: "" })
+		// We render nothing at all if the user has not typed anything yet or the input is empty
+		if (!(value.length < 1)) {
+
+			API.search(value).then(book => {
+
+				/*
+					Checks if the response is an array
+					We transform the incoming data into an array in case the response has only one item
+					If the server sends more than one item then by default it will be an array
+					In case the server sends only one type of data (eg. {}) then we put it into an array
+					so we can loop over it and render it.
+	
+					--> Check checkIfArray(arr) for the implmentation
+				*/
+				let bks = filter(isArray(book))(book => book.imageLinks !== undefined)
+
+				// Add the shelf property to a book
+				let books = this.addProp(bks, "shelf")
+
+				this.setState({ books })
+
+
+			})
+
+		} else {
+
+			this.setState({ value: "" })
+
+		}
+
 	}
 
 	render() {
