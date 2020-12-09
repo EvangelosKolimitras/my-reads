@@ -9,9 +9,10 @@ export const ifElse = check => (fn1, fn2) => check ? fn1() : fn2()
 
 export const isArray = input => Array.isArray(input) ? [...input] : Array.from(input)
 
+export const booksWithCategory = value => book => book.shelf === value
 
 const FP = {
-	filter, map, log, ifElse, isArray
+	filter, map, log, ifElse, isArray, booksWithCategory
 }
 
 export default FP

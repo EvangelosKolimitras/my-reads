@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import * as API from '../BooksAPI'
 import { Book } from './Book'
-import { filter, isArray } from '../utils/fns'
+import { filter, isArray, log } from '../utils/fns'
 export default class SearchBar extends React.Component {
 
 	state = {
@@ -36,35 +36,34 @@ export default class SearchBar extends React.Component {
 
 
 		// We render nothing at all if the user has not typed anything yet or the input is empty
-		if (!(value.length < 1)) {
+		if (value.length < 1)
+			return this.setState({ value: "" })
 
-			API.search(value).then(book => {
+		API.search(value).then(book => {
 
-				/*
-					Checks if the response is an array
-					We transform the incoming data into an array in case the response has only one item
-					If the server sends more than one item then by default it will be an array
-					In case the server sends only one type of data (eg. {}) then we put it into an array
-					so we can loop over it and render it.
+			log(book)
+			let bks, books;
+
+
+			/*
+				Checks if the response is an array
+				We transform the incoming data into an array in case the response has only one item
+				If the server sends more than one item then by default it will be an array
+				In case the server sends only one type of data (eg. {}) then we put it into an array
+				so we can loop over it and render it.
 	
-					--> Check checkIfArray(arr) for the implmentation
-				*/
-				let bks = filter(isArray(book))(book => book.imageLinks !== undefined)
-
-				// Add the shelf property to a book
-				let books = this.addProp(bks, "shelf")
-
-				this.setState({ books })
+				--> Check isArray(arr) for the implmentation
+			*/
+			bks = filter(isArray(book))(book => book.imageLinks !== undefined)
 
 
-			})
+			// Add the shelf property to a book
+			books = this.addProp(bks, "shelf")
 
-		} else {
 
-			this.setState({ value: "" })
+			this.setState({ books })
 
-		}
-
+		})
 	}
 
 	render() {

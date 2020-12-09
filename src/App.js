@@ -4,7 +4,7 @@ import SearchBar from "./components/SearchBar";
 import Bookcase from "./components/Bookcase";
 import * as API from './BooksAPI'
 import { Link, Route } from "react-router-dom";
-import { map, filter, log, ifElse } from "./utils/fns";
+import { map, filter, log, ifElse, booksWithCategory } from "./utils/fns";
 
 class BooksApp extends React.Component {
   state = {
@@ -21,15 +21,15 @@ class BooksApp extends React.Component {
   // State initialisation
   componentDidMount = async () => {
 
-    let books;
+    let books, currentlyReading, wantToRead, read;
+
 
     // Fetch all books from the API
     books = await API.getAll();
-    log(`Currently ${books.length} books.`);
 
-    let currentlyReading = filter(books);
-    let wantToRead = filter(books);
-    let read = filter(books);
+    currentlyReading = filter(books);
+    wantToRead = filter(books);
+    read = filter(books);
 
 
     /*
@@ -38,7 +38,7 @@ class BooksApp extends React.Component {
 
       This will create a new shelf and store the books with the property {shelf:"currentlyReading"}
     */
-    currentlyReading(b => b.shelf === "currentlyReading")
+    currentlyReading(booksWithCategory("currentlyReading"))
 
 
     /*
@@ -47,7 +47,7 @@ class BooksApp extends React.Component {
 
       This will create a new shelf and store the books with the property {shelf:"wantToRead"}
     */
-    wantToRead(b => b.shelf === "wantToRead")
+    wantToRead(booksWithCategory("wantToRead"))
 
     /*
       Filter the this.state.books array which is being populated onComponentDidMount
@@ -55,10 +55,10 @@ class BooksApp extends React.Component {
 
       This will create a new shelf and store the books with the property {shelf:"read"}
     */
-    read(b => b.shelf === "read")
+    read(booksWithCategory("read"))
 
     this.setState(
-      (prevState) => {
+      prevState => {
         // Check if localStorage exists
         return ifElse(localStorage.getItem("local-state"))
           (
@@ -81,13 +81,11 @@ class BooksApp extends React.Component {
     shelfOfClickedBook = e.target.value;
 
 
-
     /*
-       This book variable if a copy of the state, which the state is being populated onComponentDidMount
+       This book variable is a copy of the state, which the state is being populated onComponentDidMount
         with data coming from the server.  --> API.getALL() see componentDidMount()
     */
     // const books = [...this.state.books]
-
 
 
     /* 
