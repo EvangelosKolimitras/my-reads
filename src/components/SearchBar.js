@@ -26,16 +26,17 @@ const SearchBar = props => {
 	)
 }
 
-const render = (books) => (shelf, onUpdateShelf) => books !== undefined && books.map((book) => (
-	<Book
-		authors={book.authors}
-		title={book.title}
-		cover={book.imageLinks}
-		categories={book.categories}
-		shelf={shelf}
-		id={book.id}
-		renderedBy='search'
-		onUpdateShelf={onUpdateShelf}
-		key={book.id} />
-))
+const render = (books) => (shelf, onUpdateShelf) =>
+	books.length !== undefined && books.map((book) => (
+		<Book
+			authors={book.authors}
+			title={book.title}
+			cover={book.imageLinks}
+			categories={book.categories}
+			shelf={shelf}
+			id={book.id}
+			renderedBy='search'
+			onUpdateShelf={onUpdateShelf}
+			key={book.id} />
+	))
 export default SearchBar

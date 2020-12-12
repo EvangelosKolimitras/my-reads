@@ -24,7 +24,16 @@ const BooksApp = props => {
   }
 
   const updateShelf = (id, shelf) => BooksAPI.update({ id }, shelf).then(() => fetchMyBooks())
-  const search = async query => query.length === 0 ? setSearchBooks([]) : setSearchBooks(await BooksAPI.search(query))
+
+  const search = (query) => {
+    if (query.length !== 0) {
+      BooksAPI.search(query).then((searchBooks) => {
+        setSearchBooks(searchBooks)
+      })
+    } else {
+      setSearchBooks([])
+    }
+  }
 
   return (
     <div className="app">

@@ -20,7 +20,7 @@ const Shelf = props => {
 	)
 }
 
-const render = books => (isLoaded, shelf, onUpdateShelf) => books.length === 0 ? noBooks(isLoaded) : books.map((book) => (
+const render = books => (isLoaded, shelf, onUpdateShelf) => (books.length === 0) ? noBooks(isLoaded) : books.map((book) => (
 	<Book
 		key={book.id}
 		authors={book.authors}
