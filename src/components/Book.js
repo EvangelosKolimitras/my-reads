@@ -1,5 +1,5 @@
 import React from 'react'
-
+import IosCheckmark from 'react-ionicons/lib/IosCheckmark'
 const Book = props => {
 	const { componentIsRenderedBy, authors, title, cover, shelfOfCurrentBook, id, onUpdateShelf, shelf } = props
 	let bookShelf = (componentIsRenderedBy === 'search' && shelf.forEach((b) => b.id === id && b.shelf !== undefined && b.shelf)) || shelfOfCurrentBook
@@ -14,9 +14,28 @@ const Book = props => {
 					<div className="book-shelf-changer">
 						<select defaultValue={bookShelf !== undefined && bookShelf || 'none'} onChange={(e) => onUpdateShelf(id, e.target.value)} >
 							<option disabled>Move to...</option>
-							<option disabled={bookShelf === "currentlyReading"} value="currentlyReading">Currently Reading</option>
-							<option disabled={bookShelf === "wantToRead"} value="wantToRead">Want to Read</option>
-							<option disabled={bookShelf === "read"} value="read">Read</option>
+							<option disabled={bookShelf === "currentlyReading"} value="currentlyReading">
+								{bookShelf !== undefined && componentIsRenderedBy === 'search' && (
+									<span className='book-checkmark'>
+										<IosCheckmark fontSize="60px" color="#347eff" rotate={true} />
+									</span>
+								)}
+								Currently Reading
+								</option>
+							<option disabled={bookShelf === "wantToRead"} value="wantToRead">
+								{bookShelf !== undefined && componentIsRenderedBy === 'search' && (
+									<span className='book-checkmark'>
+										<IosCheckmark fontSize="60px" color="#347eff" rotate={true} />
+									</span>
+								)}
+								Want to Read</option>
+							<option disabled={bookShelf === "read"} value="read">
+								{bookShelf !== undefined && componentIsRenderedBy === 'search' && (
+									<span className='book-checkmark'>
+										<IosCheckmark fontSize="60px" color="#347eff" rotate={true} />
+									</span>
+								)}
+								Read</option>
 							<option value="none">None</option>
 						</select>
 					</div>
