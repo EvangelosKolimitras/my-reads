@@ -20,7 +20,7 @@ const BooksApp = props => {
     const books = await BooksAPI.getAll();
     setBooks(books)
     setIsLoaded(false)
-    books.map(book => setShelves([...shelves, { id: book.id, shelf: book.shelf }]))
+    setShelves(books.map(book => ({ id: book.id, shelf: book.shelf })))
   }
 
   const updateShelf = (id, shelf) => BooksAPI.update({ id }, shelf).then(() => fetchMyBooks())
