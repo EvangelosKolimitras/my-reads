@@ -3,14 +3,17 @@ import React from 'react'
 const Book = props => {
 	const { componentIsRenderedBy, authors, title, cover, shelfOfCurrentBook, id, onUpdateShelf, shelf } = props
 
-	let bookShelf = shelfOfCurrentBook;
+	let bookShelf
+
 	if (componentIsRenderedBy === 'search') {
 		for (let book of shelf) {
-			if (book.id === id) {
+			if (book.id === id && book.shelf !== undefined) {
 				bookShelf = book.shelf
 				break
 			}
 		}
+	} else {
+		bookShelf = shelfOfCurrentBook
 	}
 
 	const getShelfValue = () => {
