@@ -18,20 +18,26 @@ const BooksApp = props => {
 
   const fetchMyBooks = async () => {
     const books = await BooksAPI.getAll();
-    setBooks(books)
-    setIsLoaded(false)
-    setShelves(books.map(book => ({ id: book.id, shelf: book.shelf })))
+    try {
+      setBooks(books)
+      setIsLoaded(false)
+      setShelves(books.map(book => ({ id: book.id, shelf: book.shelf })))
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  const updateShelf = (id, shelf) => BooksAPI.update({ id }, shelf).then(() => fetchMyBooks())
+  const updateShelf = (id, shelf) => {
+    BooksAPI.update({ id }, shelf).then(() => fetchMyBooks())
+  }
 
-  const search = (query) => {
-    if (query.length !== 0) {
-      BooksAPI.search(query).then((searchBooks) => {
-        setSearchBooks(searchBooks)
-      })
-    } else {
+  const search = async query => {
+    const searchedQuery = await BooksAPI.search(query);
+    try {
+      if (query.length !== 0) return setSearchBooks(searchedQuery)
       setSearchBooks([])
+    } catch (error) {
+      console.log(error);
     }
   }
 

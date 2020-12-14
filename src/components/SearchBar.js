@@ -1,12 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import Book from './Book'
-import { filter, isArray } from '../utils/fns'
+import Renderer from './Renderer';
 
 const SearchBar = props => {
-
 	const { onSearch, shelf, books, onUpdateShelf } = props
-
 	return (
 		<div className="search-books">
 			<div className="search-books-bar">
@@ -19,24 +16,14 @@ const SearchBar = props => {
 				</div>
 			</div>
 			<div className="search-books-results">
-				<ol className="books-grid"> {render(books)(shelf, onUpdateShelf)} </ol>
+				<ol className="books-grid">
+					{
+						Renderer(books)({ shelf, onUpdateShelf, componentIsRenderedBy: "search" })
+					}
+				</ol>
 			</div>
-
 		</div>
 	)
 }
 
-const render = (books) => (shelf, onUpdateShelf) =>
-	books.length !== undefined && books.map((book) => (
-		<Book
-			authors={book.authors}
-			title={book.title}
-			cover={book.imageLinks}
-			categories={book.categories}
-			shelf={shelf}
-			id={book.id}
-			renderedBy='search'
-			onUpdateShelf={onUpdateShelf}
-			key={book.id} />
-	))
 export default SearchBar

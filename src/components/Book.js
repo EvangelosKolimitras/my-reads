@@ -1,22 +1,29 @@
 import React from 'react'
-import IosCheckmark from 'react-ionicons/lib/IosCheckmark'
+
 const Book = props => {
 	const { componentIsRenderedBy, authors, title, cover, shelfOfCurrentBook, id, onUpdateShelf, shelf } = props
 
-	let bookShelf;
+	let bookShelf = shelfOfCurrentBook;
 	if (componentIsRenderedBy === 'search') {
-		shelf.forEach((b) => b.id === id && b.shelf !== undefined && b.shelf)
 		for (let book of shelf) {
 			if (book.id === id) {
 				bookShelf = book.shelf
 				break
 			}
 		}
-	} else {
-		bookShelf = shelfOfCurrentBook
 	}
-	const icon = <span class="fas fa-camera"></span>
-	console.log(<IosCheckmark />)
+
+	const getShelfValue = () => {
+		console.log(shelf);
+		let bookShelf = 'none';
+		shelf.forEach((book) => {
+			if (id === book.id) {
+				bookShelf = book.shelf;
+			}
+		});
+		return bookShelf;
+	}
+
 	return (
 		<li>
 			<div className="book">
@@ -25,7 +32,7 @@ const Book = props => {
 						<img src={cover !== undefined ? cover.thumbnail : 'https://dummyimage.com/138x203/b3b3b3/ffffff.png&text=not+available'} alt={title} />
 					</div>
 					<div className="book-shelf-changer">
-						<select defaultValue={bookShelf !== undefined && bookShelf || 'none'} onChange={(e) => onUpdateShelf(id, e.target.value)} >
+						<select defaultValue={getShelfValue} onChange={(e) => onUpdateShelf(id, e.target.value)} >
 							<option disabled>Move to...</option>
 							<option disabled={bookShelf === "currentlyReading"} value="currentlyReading"> Currently Reading</option>
 							<option disabled={bookShelf === "wantToRead"} value="wantToRead">Want to Read</option>
@@ -34,8 +41,8 @@ const Book = props => {
 						</select>
 					</div>
 				</div>
-				<div className="book-title">{title !== undefined && title || "No title"} </div>
-				<div className="book-authors">{authors !== undefined && authors || "Anonymous"}</div>
+				<div className="book-title">{title || "No title"} </div>
+				<div className="book-authors">{authors || "Anonymous"}</div>
 			</div>
 		</li>
 	)
