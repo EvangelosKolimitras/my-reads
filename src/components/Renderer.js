@@ -4,7 +4,7 @@ import Book from "./Book";
 
 const Renderer = books => args => {
 	const { shelf, onUpdateShelf, isLoaded, componentIsRenderedBy } = args;
-	return books.length !== undefined && books.map((book) =>
+	return books.length !== undefined ? books.map((book) =>
 		<Book
 			authors={book.authors}
 			title={book.title}
@@ -15,7 +15,7 @@ const Renderer = books => args => {
 			componentIsRenderedBy={componentIsRenderedBy}
 			onUpdateShelf={onUpdateShelf}
 			key={book.id} />
-	)
+	) : noBooks(isLoaded)
 }
 const noBooks = isLoaded =>
 	<div className="no-books">
