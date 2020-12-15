@@ -1,7 +1,6 @@
 import React from 'react'
-import Spinner from 'react-bootstrap/Spinner'
+import { Spinner } from 'react-bootstrap'
 import Book from "./Book";
-
 const Renderer = books => args => {
 	const { shelf, onUpdateShelf, isLoaded, componentIsRenderedBy } = args; /* The property shelf is coming only from the Search component */
 	return books.length !== undefined ? books.map((book) =>

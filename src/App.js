@@ -4,8 +4,11 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Topbar from './components/Topbar'
 
+import { Link } from 'react-router-dom'
+
 import Bookcase from './components/Bookcase'
 import SearchBar from './components/SearchBar'
+import { Container } from 'react-bootstrap'
 
 const BooksApp = props => {
 
@@ -42,7 +45,7 @@ const BooksApp = props => {
   }
 
   return (
-    <div className="app">
+    <Container fluid="md">
       <Topbar />
       <Route exact path='/search' render={() => (
         <SearchBar
@@ -58,7 +61,7 @@ const BooksApp = props => {
           isLoaded={isLoaded}
           onUpdateShelf={updateShelf} />
       )} />
-    </div>
+    </Container>
   )
 }
 

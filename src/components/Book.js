@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Form } from 'react-bootstrap'
+import { Card, Form, ListGroup } from 'react-bootstrap'
 const Book = props => {
 	const { componentIsRenderedBy, authors, title, cover, shelfOfCurrentBook, id, onUpdateShelf, shelf } = props
 
@@ -15,7 +15,6 @@ const Book = props => {
 	} else {
 		bookShelf = shelfOfCurrentBook
 	}
-
 	const getShelfValue = () => {
 		console.log(shelf);
 		let bookShelf = 'none';
@@ -28,7 +27,7 @@ const Book = props => {
 	}
 
 	return (
-		<li>
+		<ListGroup.Item className="m-2">
 			<Card style={{ width: '15rem', boxShadow: '0 .4px 10px rgba(0,0,0)' }}>
 				<Card.Img height={250} variant="top" src={cover !== undefined ? cover.thumbnail : 'https://dummyimage.com/138x203/b3b3b3/ffffff.png&text=not+available'} alt={title} />
 				<Card.Body>
@@ -47,7 +46,7 @@ const Book = props => {
 					</Form.Group>
 				</Form>
 			</Card>
-		</li >
+		</ListGroup.Item >
 	)
 }
 
