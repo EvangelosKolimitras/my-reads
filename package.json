@@ -37,5 +37,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/EvangelosKolimitras/my-reads.git",
+  "author": "Evangelos Kolimitras <evangeloskolimitras@outlook.com>",
+  "license": "MIT"
 }
