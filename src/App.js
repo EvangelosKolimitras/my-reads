@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-
 import './App.css'
+import Topbar from './components/Topbar'
 
 import Bookcase from './components/Bookcase'
 import SearchBar from './components/SearchBar'
@@ -43,6 +43,7 @@ const BooksApp = props => {
 
   return (
     <div className="app">
+      <Topbar />
       <Route exact path='/search' render={() => (
         <SearchBar
           shelf={shelves}

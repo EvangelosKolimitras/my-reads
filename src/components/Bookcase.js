@@ -14,10 +14,6 @@ const Bookcase = props => {
 
 	return (
 		<div className="list-books">
-			<div className="list-books-title">
-				<h1>MyReads</h1>
-				<div>{books.length} books in total</div>
-			</div>
 			<div className="list-books-content">
 				<div>
 					{
