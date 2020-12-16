@@ -1,6 +1,6 @@
 import React from 'react';
 import Shelf from './Shelf';
-import { Container, Col } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 const Bookcase = props => {
 
 	const { books, onUpdateShelf, isLoaded } = props

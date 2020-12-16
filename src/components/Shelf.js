@@ -1,6 +1,6 @@
 import React from "react";
 import Renderer from "./Renderer"
-import { Container, Badge, Row, ListGroup, Col } from "react-bootstrap"
+import { Container, Badge, Row, ListGroup } from "react-bootstrap"
 
 const Shelf = props => {
 	const { label, books, currentCategoryShelf, onUpdateShelf, isLoaded, shelf } = props
