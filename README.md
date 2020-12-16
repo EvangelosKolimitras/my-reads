@@ -9,12 +9,18 @@ A digital bookcase for putting your books in order.
 [![N|Solid](https://icons-for-free.com/iconfiles/png/128/react+original+wordmark-1324760564365629036.png)](https://reactjs.org/)
 [![N|Solid](https://cdn.iconscout.com/icon/free/png-128/nodejs-6-569582.png)](https://nodejs.org/en/)
 
+[![N|Solid](https://seeklogo.com/images/B/bootstrap-logo-69A1CCC10B-seeklogo.com.png)](https://react-bootstrap.github.io/)
+
 ## Installation
 
 - Run `npm install to install` the dependencies
 - Run `npm start to start` the server
 
 **Official Website:** [www.the-librarian.org](https://compassionate-liskov-2fa3f0.netlify.app/)
+
+## Stylings
+
+The styling of the components is directly handled by [react-boostrap](https://react-bootstrap.github.io/).
 
 ## Functional Programming
 
