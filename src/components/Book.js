@@ -1,29 +1,26 @@
 import React from 'react'
 import { Card, Form, ListGroup } from 'react-bootstrap'
 const Book = props => {
-	const { componentIsRenderedBy, authors, title, cover, shelfOfCurrentBook, id, onUpdateShelf, shelf } = props
+	const { books, componentIsRenderedBy, authors, title, cover, id, onUpdateShelf, shelf } = props
 
-	let bookShelf
-
-	if (componentIsRenderedBy === 'search') {
-		for (let book of shelf) {
-			if (book.id === id && book.shelf !== undefined) {
-				bookShelf = book.shelf
-				break
+	let setDefaultShelfValue = () => {
+		let bookShelf = "none";
+		// Handles the case where the books rendered by the search view have the equivelant status in the bookcase
+		if (componentIsRenderedBy === "search") {
+			for (let book of shelf) {
+				if (book.id === id) {
+					bookShelf = book.shelf
+				}
+			}
+			// Handles the case where the books rendered by the main view have the equivelant status in the bookcase
+		} else {
+			for (let book of books) {
+				if (book.id === id) {
+					bookShelf = book.shelf
+				}
 			}
 		}
-	} else {
-		bookShelf = shelfOfCurrentBook
-	}
-	const getShelfValue = () => {
-		console.log(shelf);
-		let bookShelf = 'none';
-		shelf.forEach((book) => {
-			if (id === book.id) {
-				bookShelf = book.shelf;
-			}
-		});
-		return bookShelf;
+		return bookShelf
 	}
 
 	return (
@@ -36,11 +33,11 @@ const Book = props => {
 				</Card.Body>
 				<Form>
 					<Form.Group>
-						<Form.Control as="select" custom defaultValue={getShelfValue} onChange={(e) => onUpdateShelf(id, e.target.value)}>
+						<Form.Control as="select" custom defaultValue={setDefaultShelfValue()} onChange={(e) => onUpdateShelf(id, e.target.value)}>
 							<option disabled>Move to...</option>
-							<option disabled={bookShelf === "currentlyReading"} value="currentlyReading"> Currently Reading</option>
-							<option disabled={bookShelf === "wantToRead"} value="wantToRead">Want to Read</option>
-							<option disabled={bookShelf === "read"} value="read">Read</option>
+							<option value="currentlyReading"> Currently Reading</option>
+							<option value="wantToRead">Want to Read</option>
+							<option value="read">Read</option>
 							<option value="none">None</option>
 						</Form.Control>
 					</Form.Group>

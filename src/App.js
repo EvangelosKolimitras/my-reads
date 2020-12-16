@@ -26,7 +26,7 @@ const BooksApp = props => {
       setIsLoaded(false)
       setShelves(books.map(book => ({ id: book.id, shelf: book.shelf })))
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -40,7 +40,7 @@ const BooksApp = props => {
       if (query.length !== 0) return setSearchBooks(searchedQuery)
       setSearchBooks([])
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

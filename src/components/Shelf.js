@@ -8,8 +8,7 @@ const Shelf = props => {
 	return (
 		<div className="bookshelf">
 			<h2 className="h2 bookshelf-title">{label} </h2>
-			<Badge
-				variant="secondary">{booksOfCurrentShelf.length === 1 ? `${booksOfCurrentShelf.length} book` : `${booksOfCurrentShelf.length} books`}</Badge>
+			<Badge variant="secondary">{booksOfCurrentShelf.length === 1 ? `${booksOfCurrentShelf.length} book` : `${booksOfCurrentShelf.length} books`}</Badge>
 			<div className="bookshelf-books">
 				<ol className="books-grid">
 					{
