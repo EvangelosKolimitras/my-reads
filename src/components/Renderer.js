@@ -3,7 +3,7 @@ import { Spinner } from 'react-bootstrap'
 import Book from "./Book";
 const Renderer = books => args => {
 	const { shelf, onUpdateShelf, isLoaded, componentIsRenderedBy } = args; /* The property shelf is coming only from the Search component */
-	return books.length !== undefined ? books.map((book) =>
+	return books.length > 0 ? books.map((book) =>
 		<Book
 			books={books}
 			authors={book.authors}
@@ -14,11 +14,11 @@ const Renderer = books => args => {
 			componentIsRenderedBy={componentIsRenderedBy}
 			onUpdateShelf={onUpdateShelf}
 			key={book.id} />
-	) : 'There are no books.'
+	) : noBooks(isLoaded)
 }
 const noBooks = isLoaded =>
 	<div className="no-books">
-		{isLoaded ? <Spinner animation="border" variant="primary" /> : 'There are no books.'}
+		{isLoaded ? <Spinner animation="border" variant="primary" /> : <h6>There are no books.</h6>}
 	</div>
 
 export default Renderer

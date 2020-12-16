@@ -3,9 +3,6 @@ import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Topbar from './components/Topbar'
-
-import { Link } from 'react-router-dom'
-
 import Bookcase from './components/Bookcase'
 import SearchBar from './components/SearchBar'
 import { Container } from 'react-bootstrap'
