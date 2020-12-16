@@ -32,7 +32,7 @@ const Book = props => {
 					<Card.Text>{authors || "Anonymous"}</Card.Text>
 				</Card.Body>
 				<Form>
-					<Form.Group>
+					<Form.Group className="mx-1 ">
 						<Form.Control as="select" custom defaultValue={setDefaultShelfValue()} onChange={(e) => onUpdateShelf(id, e.target.value)}>
 							<option disabled>Move to...</option>
 							<option value="currentlyReading"> Currently Reading</option>

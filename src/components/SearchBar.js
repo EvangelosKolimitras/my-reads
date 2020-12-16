@@ -7,7 +7,7 @@ import * as Icon from 'react-bootstrap-icons';
 const SearchBar = props => {
 	const { onSearch, shelf, books, onUpdateShelf } = props
 	return (
-		<div className="search-books">
+		<>
 			<Form inline>
 				<Form.Group className="justify-content-end" >
 					<Link to="/"><Icon.ArrowLeft className="mr-2" size={30} /></Link>
@@ -23,7 +23,7 @@ const SearchBar = props => {
 			<ListGroup bsPrefix="books-grid">
 				{Renderer(books)({ shelf, onUpdateShelf, componentIsRenderedBy: "search" })}
 			</ListGroup>
-		</div>
+		</>
 	)
 }
 
