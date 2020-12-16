@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Renderer from './Renderer';
 import { Form, ListGroup } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons';
+
 const SearchBar = props => {
 	const { onSearch, shelf, books, onUpdateShelf } = props
 	return (
@@ -19,10 +20,8 @@ const SearchBar = props => {
 					/>
 				</Form.Group>
 			</Form>
-			<ListGroup>
-				{
-					Renderer(books)({ shelf, onUpdateShelf, componentIsRenderedBy: "search" })
-				}
+			<ListGroup bsPrefix="books-grid">
+				{Renderer(books)({ shelf, onUpdateShelf, componentIsRenderedBy: "search" })}
 			</ListGroup>
 		</div>
 	)

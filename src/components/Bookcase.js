@@ -1,6 +1,6 @@
 import React from 'react';
 import Shelf from './Shelf';
-
+import { Container, Col } from 'react-bootstrap'
 const Bookcase = props => {
 
 	const { books, onUpdateShelf, isLoaded } = props
@@ -12,24 +12,20 @@ const Bookcase = props => {
 	]
 
 	return (
-		<div className="list-books">
-			<div className="list-books-content">
-				<div>
-					{
-						categories.map(category => (
-							<Shelf
-								key={category.id}
-								books={books}
-								isLoaded={isLoaded}
-								label={category.label}
-								currentCategoryShelf={category.category}
-								onUpdateShelf={onUpdateShelf}
-							/>
-						))
-					}
-				</div>
-			</div>
-		</div>
+		<Container fluid="md">
+			{
+				categories.map(category => (
+					<Shelf
+						key={category.id}
+						books={books}
+						isLoaded={isLoaded}
+						label={category.label}
+						currentCategoryShelf={category.category}
+						onUpdateShelf={onUpdateShelf}
+					/>
+				))
+			}
+		</Container>
 	)
 }
 
