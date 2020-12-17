@@ -51,7 +51,7 @@ const BooksApp = props => {
         <Topbar />
         <Route exact path='/search' render={() => (
           <SearchBar
-            books={searchBooks}
+            searchBooks={searchBooks}
             onSearch={search}
           />
         )} />
