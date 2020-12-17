@@ -43,8 +43,10 @@ const BooksApp = props => {
     }
   }
 
+  const globalCtx = { books, isLoaded, searchBooks, shelves, updateShelf }
+
   return (
-    <Context value={{ books, isLoaded, searchBooks, shelves }}>
+    <Context value={globalCtx}>
       <Container fluid="md">
         <Topbar />
         <Route exact path='/search' render={() => (
@@ -54,11 +56,7 @@ const BooksApp = props => {
             onSearch={search}
             onUpdateShelf={updateShelf} />
         )} />
-
-        <Route exact path='/' render={() => (
-          <Bookcase
-            onUpdateShelf={updateShelf} />
-        )} />
+        <Route exact path='/' component={Bookcase} />
       </Container>
     </Context>
   )

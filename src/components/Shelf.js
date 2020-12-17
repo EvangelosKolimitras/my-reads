@@ -5,7 +5,7 @@ import { C as ctx } from './Context'
 
 const Shelf = props => {
 	const { books } = useContext(ctx)
-	const { label, currentCategoryShelf, onUpdateShelf, shelf } = props
+	const { label, currentCategoryShelf, shelf } = props
 	const booksOfCurrentShelf = books.filter((book) => book.shelf === currentCategoryShelf)
 	return (
 		<Row className="justify-content-md-center">
@@ -14,7 +14,7 @@ const Shelf = props => {
 				<Badge pill variant="info">{booksOfCurrentShelf.length === 1 ? `${booksOfCurrentShelf.length} book` : `${booksOfCurrentShelf.length} books`}</Badge>
 				<ListGroup bsPrefix="books-grid">
 					{
-						Renderer(booksOfCurrentShelf)({ books, shelf, onUpdateShelf, componentIsRenderedBy: "main" })
+						Renderer(booksOfCurrentShelf)({ books, shelf, componentIsRenderedBy: "main" })
 					}
 				</ListGroup>
 			</Container>

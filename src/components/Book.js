@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Card, Form, ListGroup } from 'react-bootstrap'
+import { C as ctx } from './Context'
+
 const Book = props => {
-	const { books, componentIsRenderedBy, authors, title, cover, id, onUpdateShelf, shelf } = props
+	const { updateShelf } = useContext(ctx)
+	const { books, componentIsRenderedBy, authors, title, cover, id, shelf } = props
 
 	let setDefaultShelfValue = () => {
 		let bookShelf = "none";
@@ -33,7 +36,7 @@ const Book = props => {
 				</Card.Body>
 				<Form>
 					<Form.Group className="mx-1 ">
-						<Form.Control as="select" custom defaultValue={setDefaultShelfValue()} onChange={(e) => onUpdateShelf(id, e.target.value)}>
+						<Form.Control as="select" custom defaultValue={setDefaultShelfValue()} onChange={(e) => updateShelf(id, e.target.value)}>
 							<option disabled>Move to...</option>
 							<option value="currentlyReading"> Currently Reading</option>
 							<option value="wantToRead">Want to Read</option>
