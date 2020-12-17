@@ -3,9 +3,9 @@ import { Spinner } from 'react-bootstrap'
 import Book from "./Book";
 import { C as ctx } from './Context';
 
-const Renderer = books => args => {
-	const { componentIsRenderedBy } = args; /* The property shelf is coming only from the Search component */
-	return books.length > 0 ? books.map((book) =>
+const Renderer = (view, books) => {
+	const { componentIsRenderedBy } = view; /* The property shelf is coming only from the Search component */
+	return (books.length > 0 && books.length) ? books.map((book) =>
 		<Book
 			key={book.id}
 			id={book.id}
@@ -13,7 +13,7 @@ const Renderer = books => args => {
 			authors={book.authors}
 			title={book.title}
 			cover={book.imageLinks}
-			componentIsRenderedBy={componentIsRenderedBy} // Added here a a new prop
+			componentIsRenderedBy={componentIsRenderedBy} // Added here as a new prop
 		/>
 	) : NoBooksLoaded()
 }

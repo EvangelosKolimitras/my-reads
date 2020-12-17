@@ -21,7 +21,7 @@ const SearchBar = props => {
 				</Form.Group>
 			</Form>
 			<ListGroup bsPrefix="books-grid">
-				{Renderer(books)({ componentIsRenderedBy: "search" })}
+				{Renderer({ componentIsRenderedBy: "search" }, books)}
 			</ListGroup>
 		</>
 	)

@@ -3,8 +3,8 @@ import { Card, Form, ListGroup } from 'react-bootstrap'
 import { C as ctx } from './Context'
 
 const Book = props => {
-	const { updateShelf, shelves } = useContext(ctx)
-	const { books, componentIsRenderedBy, authors, title, cover, id } = props
+	const { books, updateShelf, shelves } = useContext(ctx)
+	const { componentIsRenderedBy, authors, title, cover, id } = props
 
 	let setDefaultShelfValue = () => {
 		let bookShelf = "none";
