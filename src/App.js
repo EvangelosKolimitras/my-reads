@@ -44,7 +44,7 @@ const BooksApp = props => {
   }
 
   return (
-    <Context value={{ books }}>
+    <Context value={{ books, isLoaded, searchBooks, shelves }}>
       <Container fluid="md">
         <Topbar />
         <Route exact path='/search' render={() => (
@@ -57,7 +57,6 @@ const BooksApp = props => {
 
         <Route exact path='/' render={() => (
           <Bookcase
-            isLoaded={isLoaded}
             onUpdateShelf={updateShelf} />
         )} />
       </Container>

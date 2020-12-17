@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Spinner } from 'react-bootstrap'
 import Book from "./Book";
+import { C as ctx } from './Context';
+
 const Renderer = books => args => {
-	const { shelf, onUpdateShelf, isLoaded, componentIsRenderedBy } = args; /* The property shelf is coming only from the Search component */
+	const { shelf, onUpdateShelf, componentIsRenderedBy } = args; /* The property shelf is coming only from the Search component */
 	return books.length > 0 ? books.map((book) =>
 		<Book
 			key={book.id}
@@ -15,11 +17,14 @@ const Renderer = books => args => {
 			componentIsRenderedBy={componentIsRenderedBy} // Added here a a new prop
 			onUpdateShelf={onUpdateShelf}
 		/>
-	) : noBooks(isLoaded)
+	) : NoBooksLoaded()
 }
-const noBooks = isLoaded =>
-	<div className="no-books">
+
+const NoBooksLoaded = () => {
+	const { isLoaded } = useContext(ctx)
+	return <div className="no-books">
 		{isLoaded ? <Spinner animation="border" variant="primary" /> : <h6>There are no books.</h6>}
 	</div>
+}
 
 export default Renderer

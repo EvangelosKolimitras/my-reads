@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const BooksContext = React.createContext(null)
+export const C = React.createContext(null)
 
-const Context = ({ children, value }) => <BooksContext.Provider value={value}>{children}</BooksContext.Provider>
+const Context = ({ children, value }) => <C.Provider value={value}>{children}</C.Provider>
 
 export default Context
