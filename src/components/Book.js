@@ -31,7 +31,7 @@ const Book = props => {
 			<Card style={{ width: '15rem', boxShadow: '0 .4px 10px rgba(0,0,0)' }}>
 				<Card.Img height={250} variant="top" src={cover !== undefined ? cover.thumbnail : 'https://dummyimage.com/138x203/b3b3b3/ffffff.png&text=not+available'} alt={title} />
 				<Card.Body>
-					<Card.Title> <h2 className="h3">{title || "No title"}</h2> </Card.Title>
+					<Card.Title>{title || "No title"}</Card.Title>
 					<Card.Text>{authors || "Anonymous"}</Card.Text>
 				</Card.Body>
 				<Form>
