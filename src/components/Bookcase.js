@@ -3,7 +3,7 @@ import Shelf from './Shelf';
 import { Container } from 'react-bootstrap'
 const Bookcase = props => {
 
-	const { books, onUpdateShelf, isLoaded } = props
+	const { onUpdateShelf, isLoaded } = props
 
 	const categories = [
 		{ id: 1, label: "Currently Reading", category: "currentlyReading" },
@@ -17,10 +17,9 @@ const Bookcase = props => {
 				categories.map(category => (
 					<Shelf
 						key={category.id}
-						books={books}
-						isLoaded={isLoaded}
 						label={category.label}
 						currentCategoryShelf={category.category}
+						isLoaded={isLoaded}
 						onUpdateShelf={onUpdateShelf}
 					/>
 				))

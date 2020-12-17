@@ -7,6 +7,8 @@ import Bookcase from './components/Bookcase'
 import SearchBar from './components/SearchBar'
 import { Container } from 'react-bootstrap'
 
+import Context from './components/Context'
+
 const BooksApp = props => {
 
   const [books, setBooks] = useState([])
@@ -17,8 +19,8 @@ const BooksApp = props => {
   useEffect(() => fetchMyBooks(), [])
 
   const fetchMyBooks = async () => {
-    const books = await BooksAPI.getAll();
     try {
+      const books = await BooksAPI.getAll();
       setBooks(books)
       setIsLoaded(false)
       setShelves(books.map(book => ({ id: book.id, shelf: book.shelf })))
@@ -42,23 +44,24 @@ const BooksApp = props => {
   }
 
   return (
-    <Container fluid="md">
-      <Topbar />
-      <Route exact path='/search' render={() => (
-        <SearchBar
-          shelf={shelves}
-          books={searchBooks}
-          onSearch={search}
-          onUpdateShelf={updateShelf} />
-      )} />
+    <Context value={{ books }}>
+      <Container fluid="md">
+        <Topbar />
+        <Route exact path='/search' render={() => (
+          <SearchBar
+            shelf={shelves}
+            books={searchBooks}
+            onSearch={search}
+            onUpdateShelf={updateShelf} />
+        )} />
 
-      <Route exact path='/' render={() => (
-        <Bookcase
-          books={books}
-          isLoaded={isLoaded}
-          onUpdateShelf={updateShelf} />
-      )} />
-    </Container>
+        <Route exact path='/' render={() => (
+          <Bookcase
+            isLoaded={isLoaded}
+            onUpdateShelf={updateShelf} />
+        )} />
+      </Container>
+    </Context>
   )
 }
 

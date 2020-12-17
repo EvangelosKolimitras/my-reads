@@ -5,15 +5,16 @@ const Renderer = books => args => {
 	const { shelf, onUpdateShelf, isLoaded, componentIsRenderedBy } = args; /* The property shelf is coming only from the Search component */
 	return books.length > 0 ? books.map((book) =>
 		<Book
+			key={book.id}
+			id={book.id}
 			books={books}
 			authors={book.authors}
 			title={book.title}
 			cover={book.imageLinks}
 			shelf={shelf}
-			id={book.id}
-			componentIsRenderedBy={componentIsRenderedBy}
+			componentIsRenderedBy={componentIsRenderedBy} // Added here a a new prop
 			onUpdateShelf={onUpdateShelf}
-			key={book.id} />
+		/>
 	) : noBooks(isLoaded)
 }
 const noBooks = isLoaded =>
