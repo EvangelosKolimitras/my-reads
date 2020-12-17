@@ -5,7 +5,7 @@ import { Form, ListGroup } from 'react-bootstrap'
 import * as Icon from 'react-bootstrap-icons';
 
 const SearchBar = props => {
-	const { onSearch, shelf, books, onUpdateShelf } = props
+	const { onSearch, books } = props
 	return (
 		<>
 			<Form inline>
@@ -21,7 +21,7 @@ const SearchBar = props => {
 				</Form.Group>
 			</Form>
 			<ListGroup bsPrefix="books-grid">
-				{Renderer(books)({ shelf, onUpdateShelf, componentIsRenderedBy: "search" })}
+				{Renderer(books)({ componentIsRenderedBy: "search" })}
 			</ListGroup>
 		</>
 	)

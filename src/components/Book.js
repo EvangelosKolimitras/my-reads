@@ -3,14 +3,14 @@ import { Card, Form, ListGroup } from 'react-bootstrap'
 import { C as ctx } from './Context'
 
 const Book = props => {
-	const { updateShelf } = useContext(ctx)
-	const { books, componentIsRenderedBy, authors, title, cover, id, shelf } = props
+	const { updateShelf, shelves } = useContext(ctx)
+	const { books, componentIsRenderedBy, authors, title, cover, id } = props
 
 	let setDefaultShelfValue = () => {
 		let bookShelf = "none";
 		// Handles the case where the books rendered by the search view have the equivelant status in the bookcase
 		if (componentIsRenderedBy === "search") {
-			for (let book of shelf) {
+			for (let book of shelves) {
 				if (book.id === id) {
 					bookShelf = book.shelf
 				}

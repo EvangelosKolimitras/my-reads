@@ -4,7 +4,7 @@ import Book from "./Book";
 import { C as ctx } from './Context';
 
 const Renderer = books => args => {
-	const { shelf, componentIsRenderedBy } = args; /* The property shelf is coming only from the Search component */
+	const { componentIsRenderedBy } = args; /* The property shelf is coming only from the Search component */
 	return books.length > 0 ? books.map((book) =>
 		<Book
 			key={book.id}
@@ -13,7 +13,6 @@ const Renderer = books => args => {
 			authors={book.authors}
 			title={book.title}
 			cover={book.imageLinks}
-			shelf={shelf}
 			componentIsRenderedBy={componentIsRenderedBy} // Added here a a new prop
 		/>
 	) : NoBooksLoaded()

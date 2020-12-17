@@ -51,10 +51,9 @@ const BooksApp = props => {
         <Topbar />
         <Route exact path='/search' render={() => (
           <SearchBar
-            shelf={shelves}
             books={searchBooks}
             onSearch={search}
-            onUpdateShelf={updateShelf} />
+          />
         )} />
         <Route exact path='/' component={Bookcase} />
       </Container>
